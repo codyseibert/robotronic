@@ -13,4 +13,5 @@ module.exports = function() {
     explode: false
   };
   this.canJump = false;
+  this.canFire = true;
 }

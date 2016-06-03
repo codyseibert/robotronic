@@ -1,9 +1,12 @@
 var PlayerManager = require('./PlayerManager');
+var BulletManager = require('./BulletManager');
+var Bullet = require('./Bullet');
 
 var JUMP_OFFSET = 5;
 var JUMP_HEIGHT = 50;
 var JUMP_SPEED = -15.0;
 var SPEED = 8;
+var FIRE_DELAY = 500;
 
 module.exports = (function() {
   function update(delta) {
@@ -22,6 +25,20 @@ module.exports = (function() {
         player.y -= JUMP_OFFSET;
         player.vy = JUMP_SPEED;
         player.canJump = false;
+      }
+
+      if (player.input.fire && player.canFire) {
+        var angle = player.input.angle;
+        player.canFire = false;
+        BulletManager.add(new Bullet({
+          x: player.x,
+          y: player.y,
+          angle: angle,
+          player: player
+        }));
+        setTimeout(function(){
+          player.canFire = true;
+        }, FIRE_DELAY);
       }
     });
   }

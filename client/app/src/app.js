@@ -5,6 +5,7 @@ var $ = require('jquery');
 var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
 var CameraManager = require('./CameraManager');
+var BulletManager = require('./BulletManager');
 
 $(document).ready(function(){
   var canvas = document.getElementById('canvas');
@@ -28,6 +29,26 @@ $(document).ready(function(){
   };
 
   var input = {};
+
+  $(document).mousemove(function(evt) {
+    var centerX = canvas.width / 2;
+    var centerY = canvas.height / 2;
+    var mouseX = evt.clientX;
+    var mouseY = evt.clientY;
+    var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+    input.angle = angle;
+    socket.emit('input', input);
+  });
+
+  $(document).mousedown(function(evt) {
+    input.fire = true;
+    socket.emit('input', input);
+  });
+
+  $(document).mouseup(function(evt) {
+    input.fire = false;
+    socket.emit('input', input);
+  });
 
   $(document).keydown(function(evt) {
     var key = evt.keyCode || evt.which;
@@ -59,6 +80,10 @@ $(document).ready(function(){
     PlayerManager.setPlayers(p);
   });
 
+  socket.on('bullets', function(b) {
+    BulletManager.setBullets(b);
+  });
+
   function update() {
     CameraManager.update()
   }
@@ -72,6 +97,7 @@ $(document).ready(function(){
 
     PlayerManager.render(context);
     MapManager.render(context);
+    BulletManager.render(context);
 
     requestAnimationFrame(render);
   }
