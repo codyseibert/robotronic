@@ -1,0 +1,31 @@
+{
+  "name": "spacepirates",
+  "version": "1.0.0",
+  "description": "Space parites game in babylon.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrzejkrawczyk/spacepirates.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrzejkrawczyk/spacepirates/issues"
+  },
+  "homepage": "https://github.com/andrzejkrawczyk/spacepirates#readme",
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "lodash": "^4.13.1",
+    "socket.io-client": "^1.4.6"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.1",
+    "jshint": "^2.9.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-connect": "^4.0.0"
+  }
+}
