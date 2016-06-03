@@ -13,6 +13,7 @@ var _ = require('lodash');
 var InputManager = require('./InputManager');
 var PlayerManager = require('./PlayerManager');
 var PhysicsManager = require('./PhysicsManager');
+var BulletManager = require('./BulletManager');
 var MapManager = require('./MapManager');
 var SocketListener = require('./SocketListener');
 var EventListener = require('./EventListener');
@@ -32,9 +33,15 @@ setInterval(function(){
   InputManager.update()
   // apply physics such as gravity, acceleration, velocity, friction to objects
   PhysicsManager.update()
+  // update any bullets in the game
+  BulletManager.update()
 
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');
+  }));
+
+  io.emit('bullets', BulletManager.getAll().map(function(bullet) {
+    return _.omit(bullet, 'player');
   }));
 }, 10);
 
