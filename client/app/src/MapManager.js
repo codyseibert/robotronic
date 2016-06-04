@@ -11,11 +11,20 @@ module.exports = (function() {
   }
 
   function render(context) {
+    var target = CameraManager.getTarget();
     map.forEach(function(crate) {
-      context.save();
-      context.translate(crate.x + CameraManager.getCX(), crate.y + CameraManager.getCY());
-      context.drawImage(crateImg, 0, 0);
-      context.restore();
+      if (!target) {
+        return;
+      }
+      var dx = crate.x - target.x;
+      var dy = crate.y - target.y;
+      var distance = Math.sqrt(dx*dx + dy*dy);
+      if (distance < 1000) {
+        context.save();
+        context.translate(crate.x + CameraManager.getCX(), crate.y + CameraManager.getCY());
+        context.drawImage(crateImg, 0, 0);
+        context.restore();
+      }
     });
   }
 

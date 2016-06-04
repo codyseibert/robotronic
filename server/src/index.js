@@ -28,13 +28,16 @@ io.on('connection', function(socket) {
   new EventListener(socket);
 });
 
+var then = new Date().getTime()
 setInterval(function(){
+  var now = new Date().getTime()
+  var delta = now - then;
   // process user input
   InputManager.update();
   // apply physics such as gravity, acceleration, velocity, friction to objects
   PhysicsManager.update();
   // update any bullets in the game
-  BulletManager.update();
+  BulletManager.update(delta);
 
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');
@@ -43,6 +46,8 @@ setInterval(function(){
   io.emit('bullets', BulletManager.getAll().map(function(bullet) {
     return _.omit(bullet, 'player');
   }));
+
+  then = now;
 }, 10);
 
 // Setup the server & rest API

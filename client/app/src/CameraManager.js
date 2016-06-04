@@ -19,6 +19,10 @@ module.exports = (function() {
     target = t;
   }
 
+  function getTarget() {
+    return target;
+  }
+
   function update() {
     if (target) {
       cx = parseInt(window.innerWidth / 2 - target.x, 10);
@@ -30,6 +34,7 @@ module.exports = (function() {
     update: update,
     getCX: getCX,
     getCY: getCY,
-    setTarget: setTarget
+    setTarget: setTarget,
+    getTarget: getTarget
   };
 }());
