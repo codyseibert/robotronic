@@ -31,8 +31,8 @@ module.exports = (function() {
         var angle = player.input.angle;
         player.canFire = false;
         BulletManager.add(new Bullet({
-          x: player.x,
-          y: player.y,
+          x: player.x + player.width / 2,
+          y: player.y + player.height / 2,
           angle: angle,
           player: player
         }));

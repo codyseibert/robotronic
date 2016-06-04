@@ -17,6 +17,7 @@ var BulletManager = require('./BulletManager');
 var MapManager = require('./MapManager');
 var SocketListener = require('./SocketListener');
 var EventListener = require('./EventListener');
+var EnergyManager = require('./EnergyManager');
 var Player = require('./Player');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,12 +37,11 @@ var update = function() {
   var delta = now - then;
 
   var before = new Date().getTime();
-  // process user input
-  InputManager.update();
-  // apply physics such as gravity, acceleration, velocity, friction to objects
-  PhysicsManager.update();
-  // update any bullets in the game
+
+  InputManager.update(delta);
+  PhysicsManager.update(delta);
   BulletManager.update(delta);
+  EnergyManager.update(delta);
 
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');
@@ -49,6 +49,10 @@ var update = function() {
 
   io.emit('bullets', BulletManager.getAll().map(function(bullet) {
     return _.omit(bullet, 'player');
+  }));
+
+  io.emit('energies', EnergyManager.getAll().map(function(energy) {
+    return energy;
   }));
 
   var after = new Date().getTime();

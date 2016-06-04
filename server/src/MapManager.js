@@ -51,6 +51,19 @@ module.exports = (function() {
     return { x: 1, y: -1};
   }
 
+  function findBlankTile() {
+    do {
+      var rj = parseInt(Math.random() * getHeight());
+      var ri = parseInt(Math.random() * getWidth());
+      if (mapGrid[rj][ri] === 0) {
+        return {
+          x: ri * 64 + 32 + parseInt(Math.random() * 56) - 28,
+          y: rj * 64 + 32 + parseInt(Math.random() * 56) - 28
+        }
+      }
+    } while (true)
+  }
+
   function generateMap() {
     var world = new CellAuto.World({
       width: getWidth(),
@@ -96,6 +109,7 @@ module.exports = (function() {
     getCurrentMap: getCurrentMap,
     generateMap: generateMap,
     findBlankSpace: findBlankSpace,
+    findBlankTile: findBlankTile,
     getWidth: getWidth,
     getHeight: getHeight,
     getBlocksNear: getBlocksNear

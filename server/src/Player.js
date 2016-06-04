@@ -6,6 +6,7 @@ module.exports = function() {
   this.width = 48;
   this.height = 48;
   this.health = 10;
+  this.energy = 0;
   this.isFacingLeft = false;
   this.bulletDamage = 1;
   this.input = {

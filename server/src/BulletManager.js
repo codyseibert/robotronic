@@ -1,9 +1,5 @@
 var _ = require('lodash');
-var js2dmath = require('js-2dmath');
-var Vec2 = js2dmath.Vec2;
-var Polygon = js2dmath.Polygon;
-var Intersection = js2dmath.Intersection;
-
+var CollisionUtil = require('./CollisionUtil');
 var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
 
@@ -24,26 +20,6 @@ module.exports = (function() {
     return bullets;
   }
 
-  function isColliding(bullet, obj) {
-    var bulletPoly = Polygon.create(
-      Vec2.create(bullet.x, bullet.y),
-      Vec2.create(bullet.x + bullet.width, bullet.y),
-      Vec2.create(bullet.x + bullet.width, bullet.y + bullet.height),
-      Vec2.create(bullet.x, bullet.y + bullet.height)
-    )
-    var obj = Polygon.create(
-      Vec2.create(obj.x, obj.y),
-      Vec2.create(obj.x + obj.width, obj.y),
-      Vec2.create(obj.x + obj.width, obj.y + obj.height),
-      Vec2.create(obj.x, obj.y + obj.height)
-    )
-    var intersection = Intersection.polygon_polygon(bulletPoly, obj);
-    if (intersection.reason === 8) {
-      return true;
-    }
-    return false;
-  }
-
   function update(delta) {
     bullets.map(function(bullet) {
       bullet.timeToLive -= delta;
@@ -62,7 +38,7 @@ module.exports = (function() {
         if (player === bullet.player) {
           continue;
         }
-        if (player.health > 0 && isColliding(bullet, player)) {
+        if (player.health > 0 && CollisionUtil.isColliding(bullet, player)) {
           player.health -= bullet.player.bulletDamage;
           bullet.remove = true;
         }
@@ -71,7 +47,7 @@ module.exports = (function() {
       var nearByBlocks = MapManager.getBlocksNear(bullet, 128);
       for (var i = 0; i < nearByBlocks.length; i++) {
         var block = nearByBlocks[i];
-        if (isColliding(bullet, block)) {
+        if (CollisionUtil.isColliding(bullet, block)) {
           bullet.remove = true;
         }
       }

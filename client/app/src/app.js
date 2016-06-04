@@ -6,6 +6,7 @@ var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
 var CameraManager = require('./CameraManager');
 var BulletManager = require('./BulletManager');
+var EnergyManager = require('./EnergyManager');
 
 window.DEBUG = true;
 
@@ -86,6 +87,10 @@ $(document).ready(function(){
     BulletManager.setBullets(b);
   });
 
+  socket.on('energies', function(e) {
+    EnergyManager.setEnergies(e);
+  });
+
   function update() {
     CameraManager.update();
   }
@@ -98,6 +103,7 @@ $(document).ready(function(){
     PlayerManager.render(context);
     MapManager.render(context);
     BulletManager.render(context);
+    EnergyManager.render(context);
 
     requestAnimationFrame(render);
   }
