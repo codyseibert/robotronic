@@ -26,6 +26,12 @@ module.exports = (function() {
       context.drawImage(img, offsetX, 0);
       context.restore();
 
+      context.save();
+      context.translate(player.x + CameraManager.getCX(), player.y + CameraManager.getCY());
+      context.font = "20px Georgia";
+      context.fillText(player.name, (player.name.length / 2) * -5, -10);
+      context.restore();
+
       if (window.DEBUG) {
         context.save();
         context.translate(player.x + CameraManager.getCX(), player.y + CameraManager.getCY());
