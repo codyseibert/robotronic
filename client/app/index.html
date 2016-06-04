@@ -9,6 +9,21 @@
         margin: 0;
         padding: 0;
       }
+
+      #energy {
+        position: fixed;
+        left: 25px;
+        top: 25px;
+        padding: 10px;
+        font-size: 20px;
+        background-color: white;
+        border-radius: 10px;
+        border: 2px solid black;
+      }
+
+      #energy .count {
+        color: green;
+      }
     </style>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -16,6 +31,7 @@
   </head>
   <body>
     <canvas id="canvas"></canvas>
+    <div id="energy">You Have <span class="count">0</span> Energy</div>
     <script src="app.js"></script>
   </body>
 </html>

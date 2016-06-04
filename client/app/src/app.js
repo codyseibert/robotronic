@@ -79,7 +79,11 @@ $(document).ready(function(){
   });
 
   socket.on('players', function(p) {
-    CameraManager.setTarget(_.find(p, {id: playerId}));
+    var myPlayer = _.find(p, {id: playerId});
+    CameraManager.setTarget(myPlayer);
+    if (myPlayer) {
+      $('#energy .count').text(myPlayer.energy || 0)
+    }
     PlayerManager.setPlayers(p);
   });
 
