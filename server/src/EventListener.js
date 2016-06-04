@@ -12,6 +12,12 @@ module.exports = function(socket) {
     player.name = payload.name;
     player.socket = socket;
 
+    // find blank space on map
+    var blankLoc = MapManager.findBlankSpace();
+    console.log(blankLoc);
+    player.x = blankLoc.x * 64 + 32;
+    player.y = blankLoc.y * 64 + 32;
+
     PlayerManager.add(socket, player);
 
     socket.emit('players', PlayerManager.getAll().map(function(player) {

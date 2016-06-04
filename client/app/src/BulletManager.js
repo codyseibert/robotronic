@@ -24,5 +24,5 @@ module.exports = (function() {
   return {
     render: render,
     setBullets: setBullets
-  }
+  };
 }());

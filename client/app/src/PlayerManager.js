@@ -7,7 +7,7 @@ module.exports = (function() {
   playerImg.src = "assets/images/player.gif";
 
   function setPlayers(p) {
-    players = p
+    players = p;
   }
 
   function render(context) {
@@ -26,5 +26,5 @@ module.exports = (function() {
   return {
     render: render,
     setPlayers: setPlayers
-  }
+  };
 }());

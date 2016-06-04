@@ -24,17 +24,17 @@ app.use(bodyParser.json());
 app.use(cors());
 
 io.on('connection', function(socket) {
-  new SocketListener(socket)
-  new EventListener(socket)
+  new SocketListener(socket);
+  new EventListener(socket);
 });
 
 setInterval(function(){
   // process user input
-  InputManager.update()
+  InputManager.update();
   // apply physics such as gravity, acceleration, velocity, friction to objects
-  PhysicsManager.update()
+  PhysicsManager.update();
   // update any bullets in the game
-  BulletManager.update()
+  BulletManager.update();
 
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');
@@ -47,5 +47,6 @@ setInterval(function(){
 
 // Setup the server & rest API
 var port = process.env.PORT || 8081;
+
 var router = express.Router();
 server.listen(port);

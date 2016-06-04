@@ -85,12 +85,10 @@ $(document).ready(function(){
   });
 
   function update() {
-    CameraManager.update()
+    CameraManager.update();
   }
 
-  setInterval(function() {
-    update()
-  , 10});
+  setInterval(update, 10);
 
   function render() {
     context.clearRect(0, 0, canvas.width, canvas.height);

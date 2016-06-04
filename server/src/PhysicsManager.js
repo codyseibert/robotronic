@@ -10,6 +10,8 @@ var FRICTION = 0.80;
 
 module.exports = (function() {
 
+  MapManager.generateMap();
+
   function isPlayerColliding(player, objects) {
     for (var i = 0; i < objects.length; i++) {
       obj = objects[i];

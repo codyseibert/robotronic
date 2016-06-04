@@ -22,5 +22,5 @@ module.exports = (function() {
   return {
     render: render,
     setMap: setMap
-  }
+  };
 }());

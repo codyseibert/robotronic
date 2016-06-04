@@ -31,5 +31,5 @@ module.exports = (function() {
     getCX: getCX,
     getCY: getCY,
     setTarget: setTarget
-  }
+  };
 }());
