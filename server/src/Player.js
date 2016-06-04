@@ -3,9 +3,11 @@ var Entity = require('./Entity');
 
 module.exports = function() {
   _.extend(this, new Entity());
-  this.width = 64;
+  this.width = 48;
   this.height = 48;
+  this.health = 10;
   this.isFacingLeft = false;
+  this.bulletDamage = 1;
   this.input = {
     left: false,
     right: false,

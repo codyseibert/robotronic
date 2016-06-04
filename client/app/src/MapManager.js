@@ -33,13 +33,22 @@ module.exports = (function() {
   }
 
   function render(context) {
-    map.forEach(function(crate, idx) {
+    var target = CameraManager.getTarget();
+    map.forEach(function(crate) {
+      if (!target) {
+        return;
+      }
+      var dx = crate.x - target.x;
+      var dy = crate.y - target.y;
+      var distance = Math.sqrt(dx*dx + dy*dy);
+      if (distance < 1000) {
+        var tileImage = tileImages[getNeighbors(crate.x, crate.y)];
 
-      var tileImage = tileImages[getNeighbors(crate.x, crate.y)];
-      context.save();
-      context.translate(crate.x + CameraManager.getCX(), crate.y + CameraManager.getCY());
-      context.drawImage(tileImage, 0, 0);
-      context.restore();
+        context.save();
+        context.translate(crate.x + CameraManager.getCX(), crate.y + CameraManager.getCY());
+        context.drawImage(tileImage, 0, 0);
+        context.restore();
+      }
     });
   }
 

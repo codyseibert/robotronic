@@ -62,7 +62,7 @@ $(document).ready(function(){
     socket.emit('input', input);
   });
 
-  var socket = io.connect('http://localhost:8081');
+  var socket = io.connect('http://' + window.location.hostname + ':8081');
   socket.on('connect', function(data) {
     socket.emit('join', {name: 'FiVeTeN'});
   });
