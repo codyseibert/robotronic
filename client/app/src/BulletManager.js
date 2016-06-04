@@ -18,6 +18,16 @@ module.exports = (function() {
       context.scale(scale, scale);
       context.drawImage(bulletImg, 0, 0);
       context.restore();
+
+      if (window.DEBUG) {
+        context.save();
+        context.translate(bullet.x + CameraManager.getCX(), bullet.y + CameraManager.getCY());
+        context.beginPath()
+        context.rect(0, 0, 15, 15);
+        context.stroke();
+        context.closePath()
+        context.restore();
+      }
     });
   }
 

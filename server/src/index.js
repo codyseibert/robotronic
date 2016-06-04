@@ -28,10 +28,14 @@ io.on('connection', function(socket) {
   new EventListener(socket);
 });
 
+var TARGET_SLEEP_TIME = 10;
+
 var then = new Date().getTime()
-setInterval(function(){
+var update = function() {
   var now = new Date().getTime()
   var delta = now - then;
+
+  var before = new Date().getTime();
   // process user input
   InputManager.update();
   // apply physics such as gravity, acceleration, velocity, friction to objects
@@ -47,8 +51,13 @@ setInterval(function(){
     return _.omit(bullet, 'player');
   }));
 
+  var after = new Date().getTime();
+  var time = after - before;
+  var sleepTime = Math.max(0, TARGET_SLEEP_TIME - time);
   then = now;
-}, 10);
+  setTimeout(update, sleepTime);
+}
+update();
 
 // Setup the server & rest API
 var port = process.env.PORT || 8081;

@@ -12,13 +12,21 @@ module.exports = (function() {
 
   var map = [];
 
-
-  //for (var i = 0; i < 100; i++) {
-  //  map.push(new Box(i*64 - 500, 500, 64, 64))
-  //}
-
   function getCurrentMap() {
     return map;
+  }
+
+  function getBlocksNear(obj, dist) {
+    var near = [];
+    map.forEach(function(block) {
+      var dx = obj.x - block.x;
+      var dy = obj.y - block.y;
+      var distance = Math.sqrt(dx*dx + dy*dy);
+      if (distance < dist) {
+        near.push(block);
+      }
+    });
+    return near;
   }
 
   // TODO: make configurable
@@ -89,6 +97,7 @@ module.exports = (function() {
     generateMap: generateMap,
     findBlankSpace: findBlankSpace,
     getWidth: getWidth,
-    getHeight: getHeight
+    getHeight: getHeight,
+    getBlocksNear: getBlocksNear
   }
 }());

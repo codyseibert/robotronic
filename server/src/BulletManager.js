@@ -4,9 +4,10 @@ var Vec2 = js2dmath.Vec2;
 var Polygon = js2dmath.Polygon;
 var Intersection = js2dmath.Intersection;
 
+var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
 
-var DEFAULT_BULLET_SPEED = 15;
+var DEFAULT_BULLET_SPEED = 7;
 
 module.exports = (function() {
   var bullets = [];
@@ -23,20 +24,20 @@ module.exports = (function() {
     return bullets;
   }
 
-  function isBulletHittingPlayer(bullet, player) {
+  function isColliding(bullet, obj) {
     var bulletPoly = Polygon.create(
       Vec2.create(bullet.x, bullet.y),
       Vec2.create(bullet.x + bullet.width, bullet.y),
       Vec2.create(bullet.x + bullet.width, bullet.y + bullet.height),
       Vec2.create(bullet.x, bullet.y + bullet.height)
     )
-    var playerPoly = Polygon.create(
-      Vec2.create(player.x, player.y),
-      Vec2.create(player.x + player.width, player.y),
-      Vec2.create(player.x + player.width, player.y + player.height),
-      Vec2.create(player.x, player.y + player.height)
+    var obj = Polygon.create(
+      Vec2.create(obj.x, obj.y),
+      Vec2.create(obj.x + obj.width, obj.y),
+      Vec2.create(obj.x + obj.width, obj.y + obj.height),
+      Vec2.create(obj.x, obj.y + obj.height)
     )
-    var intersection = Intersection.polygon_polygon(bulletPoly, playerPoly);
+    var intersection = Intersection.polygon_polygon(bulletPoly, obj);
     if (intersection.reason === 8) {
       return true;
     }
@@ -53,12 +54,24 @@ module.exports = (function() {
 
       bullet.x += Math.cos(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED);
       bullet.y += Math.sin(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED);
+
       // TODO: check if bullet hits anyone and damage them using the bulletDamage on the player
       var players = PlayerManager.getAll();
       for (var i = players.length - 1; i >= 0; i--) {
         var player = players[i];
-        if (player.health > 0 && isBulletHittingPlayer(bullet, player)) {
+        if (player === bullet.player) {
+          continue;
+        }
+        if (player.health > 0 && isColliding(bullet, player)) {
           player.health -= bullet.player.bulletDamage;
+          bullet.remove = true;
+        }
+      }
+
+      var nearByBlocks = MapManager.getBlocksNear(bullet, 128);
+      for (var i = 0; i < nearByBlocks.length; i++) {
+        var block = nearByBlocks[i];
+        if (isColliding(bullet, block)) {
           bullet.remove = true;
         }
       }

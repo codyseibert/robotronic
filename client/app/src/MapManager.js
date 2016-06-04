@@ -29,7 +29,6 @@ module.exports = (function() {
         mapGrid[y][x] = mapGrid[y][x] || 0;
       }
     }
-
   }
 
   function render(context) {

@@ -15,6 +15,7 @@ module.exports = (function() {
   function isPlayerColliding(player, objects) {
     for (var i = 0; i < objects.length; i++) {
       obj = objects[i];
+
       var boxPoly = Polygon.create(
         Vec2.create(obj.x, obj.y),
         Vec2.create(obj.x + obj.width, obj.y),
@@ -44,12 +45,13 @@ module.exports = (function() {
       player.vx *= FRICTION;
 
       player.x += player.vx;
-      if (isPlayerColliding(player, map)) {
+      var near = MapManager.getBlocksNear(player, 128);
+      if (isPlayerColliding(player, near)) {
         player.x -= player.vx;
       }
 
       player.y += player.vy;
-      if (isPlayerColliding(player, map)) {
+      if (isPlayerColliding(player, near)) {
         if (player.vy > 0) {
           player.canJump = true;
         }
