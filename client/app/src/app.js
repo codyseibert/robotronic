@@ -34,8 +34,8 @@ $(document).ready(function(){
   var input = {};
 
   $(document).mousemove(function(evt) {
-    var centerX = canvas.width / 2;
-    var centerY = canvas.height / 2;
+    var centerX = canvas.width / 2 + 24;
+    var centerY = canvas.height / 2 + 24;
     var mouseX = evt.clientX;
     var mouseY = evt.clientY;
     var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
@@ -85,6 +85,22 @@ $(document).ready(function(){
       $('#energy .count').text(myPlayer.energy || 0)
     }
     PlayerManager.setPlayers(p);
+
+    p.sort(function(a, b) {
+      return b.energy - a.energy;
+    });
+    $('#scoreboard .players').empty();
+    var i = 1;
+    p.forEach(function(play) {
+      var $row = $('<tr></tr>');
+      var $rank = $('<td></td>').html(i++);
+      var $name = $('<td></td>').html(play.name);
+      var $energy = $('<td></td>').html(play.energy);
+      $row.append($rank);
+      $row.append($name);
+      $row.append($energy);
+      $('#scoreboard .players').append($row);
+    });
   });
 
   socket.on('bullets', function(b) {

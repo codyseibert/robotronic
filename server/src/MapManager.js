@@ -57,8 +57,8 @@ module.exports = (function() {
       var ri = parseInt(Math.random() * getWidth());
       if (mapGrid[rj][ri] === 0) {
         return {
-          x: ri * 64 + 32 + parseInt(Math.random() * 56) - 28,
-          y: rj * 64 + 32 + parseInt(Math.random() * 56) - 28
+          x: ri * 64 + 32,
+          y: rj * 64 + 32
         }
       }
     } while (true)
@@ -98,8 +98,9 @@ module.exports = (function() {
 
     for (var j = 0; j < world.height; j++) {
       for (var i = 0; i < world.width; i++) {
-        if (mapGrid[j][i]) {
+        if (mapGrid[j][i] || j === 0 || i === 0 || j === world.height - 1 || i === world.width - 1) {
           map.push(new Box(i * 64, j * 64, 64, 64));
+          mapGrid[j][i] = 1;
         }
       }
     }

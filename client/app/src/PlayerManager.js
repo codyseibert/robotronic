@@ -10,6 +10,10 @@ module.exports = (function() {
     players = p;
   }
 
+  function getPlayers() {
+    return players;
+  }
+
   function render(context) {
     players.map(function(player) {
       var scaleX = player.isFacingLeft ? -1 : 1;
@@ -36,6 +40,7 @@ module.exports = (function() {
 
   return {
     render: render,
-    setPlayers: setPlayers
+    setPlayers: setPlayers,
+    getPlayers: getPlayers
   };
 }());

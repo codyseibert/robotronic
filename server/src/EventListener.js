@@ -7,16 +7,14 @@ module.exports = function(socket) {
   var player = null
 
   socket.on('join', function(payload) {
-    console.log('player joined', socket.id, payload);
     player = new Player()
     player.name = payload.name;
     player.socket = socket;
 
     // find blank space on map
-    var blankLoc = MapManager.findBlankSpace();
-    console.log(blankLoc);
-    player.x = blankLoc.x * 64 + 32;
-    player.y = blankLoc.y * 64 + 32;
+    var blankLoc = MapManager.findBlankTile();
+    player.x = blankLoc.x - 30;
+    player.y = blankLoc.y - 30;
 
     PlayerManager.add(socket, player);
 

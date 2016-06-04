@@ -28,8 +28,8 @@ module.exports = (function() {
     }
     var blankTile = MapManager.findBlankTile();
     var energy = new Energy();
-    energy.x = blankTile.x;
-    energy.y = blankTile.y;
+    energy.x = blankTile.x + parseInt(Math.random() * 56) - 28;
+    energy.y = blankTile.y + parseInt(Math.random() * 56) - 28;
     energies.push(energy);
   }
 

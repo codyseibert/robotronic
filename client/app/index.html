@@ -19,10 +19,57 @@
         background-color: white;
         border-radius: 10px;
         border: 2px solid black;
+        font-weight: bold;
       }
 
       #energy .count {
         color: green;
+      }
+
+      #scoreboard {
+        position: fixed;
+        right: 25px;
+        top: 25px;
+        padding: 10px;
+        font-size: 20px;
+        background-color: white;
+        border-radius: 10px;
+        border: 2px solid black;
+      }
+
+      #scoreboard .title {
+        font-weight: bold;
+        text-align: center;
+      }
+
+      #scoreboard .body {
+        max-height: 200px;
+        overflow-y: scroll;
+      }
+
+      ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+      }
+
+      #scoreboard table {
+        width: 300px;
+      }
+
+      #scoreboard table th {
+        font-weight: normal;
+        text-align: center;
+      }
+
+      #scoreboard table td {
+        font-weight: normal;
+        text-align: center;
       }
     </style>
 
@@ -32,6 +79,22 @@
   <body>
     <canvas id="canvas"></canvas>
     <div id="energy">You Have <span class="count">0</span> Energy</div>
+    <div id="scoreboard">
+      <div class="title center bold">Top Players</div>
+      <div class="body">
+        <table>
+          <thead>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Energy</th>
+            <!-- <th>Kills</th>
+            <th>Deaths</th> -->
+          </thead>
+          <tbody class="players">
+          </tbody>
+        </table>
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>
