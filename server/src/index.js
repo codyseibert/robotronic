@@ -42,6 +42,7 @@ var update = function() {
   PhysicsManager.update(delta);
   BulletManager.update(delta);
   EnergyManager.update(delta);
+  PlayerManager.update(delta);
 
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');

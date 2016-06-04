@@ -16,6 +16,10 @@ module.exports = (function() {
 
   function render(context) {
     players.map(function(player) {
+      if (player.health <= 0) {
+        return;
+      }
+      
       var scaleX = player.isFacingLeft ? -1 : 1;
       var offsetX = player.isFacingLeft ? -48 : 0;
       var scale = 1;

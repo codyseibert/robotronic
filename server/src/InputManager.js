@@ -13,6 +13,10 @@ module.exports = (function() {
     var players = PlayerManager.getAll()
 
     players.forEach(function(player) {
+      if (player.health <= 0){
+        return;
+      }
+      
       if (player.input.left) {
         player.vx = -SPEED;
         player.isFacingLeft = true;

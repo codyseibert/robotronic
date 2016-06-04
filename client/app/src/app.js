@@ -16,6 +16,8 @@ $(document).ready(function(){
   $(window).resize(function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    $('#udead').css('left', canvas.width / 2 - 100 + "px");
+    $('#udead').css('top', canvas.height / 2 - 100 + "px");
   });
   $(window).resize();
 
@@ -82,9 +84,16 @@ $(document).ready(function(){
     var myPlayer = _.find(p, {id: playerId});
     CameraManager.setTarget(myPlayer);
     if (myPlayer) {
-      $('#energy .count').text(myPlayer.energy || 0)
+      $('#energy .count').text(myPlayer.energy || 0);
+
+      if (myPlayer.health <= 0) {
+        $('#udead').show();
+      } else {
+        $('#udead').hide();
+      }
     }
     PlayerManager.setPlayers(p);
+
 
     p.sort(function(a, b) {
       return b.energy - a.energy;

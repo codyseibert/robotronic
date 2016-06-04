@@ -51,7 +51,7 @@
         -webkit-appearance: none;
         width: 7px;
       }
-      
+
       ::-webkit-scrollbar-thumb {
         border-radius: 4px;
         background-color: rgba(0,0,0,.5);
@@ -71,6 +71,26 @@
         font-weight: normal;
         text-align: center;
       }
+
+      #udead {
+        text-align: center;
+        font-size: 20px;
+        font-color: red;
+        position: fixed;
+        top: 200px;
+        width: 200px;
+      }
+
+      .noselect {
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none;   /* Chrome/Safari/Opera */
+        -khtml-user-select: none;    /* Konqueror */
+        -moz-user-select: none;      /* Firefox */
+        -ms-user-select: none;       /* Internet Explorer/Edge */
+        user-select: none;           /* Non-prefixed version, currently*/
+      }
+
     </style>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -78,8 +98,8 @@
   </head>
   <body>
     <canvas id="canvas"></canvas>
-    <div id="energy">You Have <span class="count">0</span> Energy</div>
-    <div id="scoreboard">
+    <div id="energy" class="noselect">You Have <span class="count">0</span> Energy</div>
+    <div id="scoreboard" class="noselect">
       <div class="title center bold">Top Players</div>
       <div class="body">
         <table>
@@ -94,6 +114,11 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div id="udead" class="noselect">
+      You Are Dead!
+      <br>
+      Respawning in 5 seconds!
     </div>
     <script src="app.js"></script>
   </body>
