@@ -7,6 +7,8 @@ var PlayerManager = require('./PlayerManager');
 var CameraManager = require('./CameraManager');
 var BulletManager = require('./BulletManager');
 
+window.DEBUG = true;
+
 $(document).ready(function(){
   var canvas = document.getElementById('canvas');
   var context = canvas.getContext("2d");
