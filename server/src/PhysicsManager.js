@@ -22,10 +22,10 @@ module.exports = (function() {
         Vec2.create(obj.x, obj.y + obj.height)
       )
       var playerPoly = Polygon.create(
-        Vec2.create(player.x, player.y),
-        Vec2.create(player.x + player.width, player.y),
-        Vec2.create(player.x + player.width, player.y + player.height),
-        Vec2.create(player.x, player.y + player.height)
+        Vec2.create(player.x - player.width / 2, player.y),
+        Vec2.create(player.x + player.width / 2, player.y),
+        Vec2.create(player.x + player.width / 2, player.y + player.height),
+        Vec2.create(player.x - player.width / 2, player.y + player.height)
       )
       var intersection = Intersection.polygon_polygon(boxPoly, playerPoly);
       if (intersection.reason === 8) {
