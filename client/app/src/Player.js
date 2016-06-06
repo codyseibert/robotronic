@@ -30,6 +30,7 @@ module.exports = (function() {
 		});
 
 		this.sprite.addAnimation('hover', [0, 1]);
+		this.sprite.addAnimation('run', [0, 2]);
 		this.sprite.playAnimation('hover', 3);
 	}
 

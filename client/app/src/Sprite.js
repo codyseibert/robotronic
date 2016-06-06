@@ -43,7 +43,10 @@ module.exports = (function() {
 		var scale = 1;
 
 		// animation
-		var dx = this.width * Math.floor(this.frameIndex);
+		var dx = 0;
+		if (this.currentAnim !== null) {
+			dx = this.width * this.animations[this.currentAnim].frames[Math.floor(this.frameIndex)];
+		}
 		// facing
 		var dy = this.isFacingLeft ? this.height : 0;
 
