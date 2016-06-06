@@ -41,19 +41,21 @@ module.exports = (function() {
 
 	Sprite.prototype.render = function(x, y, context, CameraManager) {
 		var scale = 1;
-
+		var scaleX = this.isFacingLeft ? -1 : 1;
 		// animation
 		var dx = 0;
 		if (this.currentAnim !== null) {
 			dx = this.width * this.animations[this.currentAnim].frames[Math.floor(this.frameIndex)];
 		}
+
 		// facing
-		var dy = this.isFacingLeft ? this.height : 0;
+		var fx = this.isFacingLeft ? this.width : 0;
+		//var dy = this.isFacingLeft ? this.height : 0;
 
 		context.save();
-		context.translate(x + CameraManager.getCX(), y + CameraManager.getCY());
-		context.scale(1 / scale, 1 / scale);
-		context.drawImage(this.spriteImage, dx, dy, this.width, this.height, 0, 0, this.width, this.height);
+		context.translate(x + fx + CameraManager.getCX(), y + CameraManager.getCY());
+		context.scale(scaleX * scale, scale);
+		context.drawImage(this.spriteImage, dx, 0, this.width, this.height, 0, 0, this.width, this.height);
 		context.restore();
 
 		if (window.DEBUG) {
