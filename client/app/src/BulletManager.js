@@ -22,10 +22,10 @@ module.exports = (function() {
       if (window.DEBUG) {
         context.save();
         context.translate(bullet.x + CameraManager.getCX(), bullet.y + CameraManager.getCY());
-        context.beginPath()
+        context.beginPath();
         context.rect(0, 0, 15, 15);
         context.stroke();
-        context.closePath()
+        context.closePath();
         context.restore();
       }
     });

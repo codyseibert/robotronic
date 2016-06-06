@@ -4,10 +4,12 @@ var MapManager = require('./MapManager');
 var _ = require('lodash');
 
 module.exports = function(socket) {
-  var player = null
+  var player = null;
+
+  var playerCount = 1;
 
   socket.on('join', function(payload) {
-    player = new Player()
+    player = new Player();
     player.name = payload.name;
     player.socket = socket;
 
@@ -15,6 +17,7 @@ module.exports = function(socket) {
     var blankLoc = MapManager.findBlankTile();
     player.x = blankLoc.x - 30;
     player.y = blankLoc.y - 30;
+    player.id = playerCount++;
 
     PlayerManager.add(socket, player);
 

@@ -45,7 +45,7 @@ gulp.task('reload', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./app/index.html', './app/src/**/*.js'], ['build', 'reload']);
+  gulp.watch(['./app/index.html', './app/src/**/*.js', './app/assets/**/*'], ['build', 'reload']);
 });
 
 gulp.task('build', ['lint', 'copy', 'scripts'])

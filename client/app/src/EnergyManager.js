@@ -30,10 +30,10 @@ module.exports = (function() {
         if (window.DEBUG) {
           context.save();
           context.translate(energy.x + CameraManager.getCX(), energy.y + CameraManager.getCY());
-          context.beginPath()
+          context.beginPath();
           context.rect(0, 0, 10, 10);
           context.stroke();
-          context.closePath()
+          context.closePath();
           context.restore();
         }
       }
