@@ -60,7 +60,8 @@ module.exports = (function() {
 		// write name
 		context.save();
 		context.translate(this.x + CameraManager.getCX(), this.y + CameraManager.getCY());
-		context.font = "20px Georgia";
+		var fontSize = 16 + Math.floor(this.energy/4);
+		context.font = fontSize + "px 'Orbitron'";
 		context.fillText(this.name, (this.name.length / 2) * -5, -10);
 		context.restore();
 
