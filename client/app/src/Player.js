@@ -29,7 +29,13 @@ module.exports = (function() {
 			isFacingLeft: false
 		});
 
+		this.sprite.addAnimation('hover', [0, 1]);
+		this.sprite.playAnimation('hover', 3);
 	}
+
+	Player.prototype.update = function(dt) {
+		this.sprite.update(dt);
+	};
 
 	Player.prototype.setProps = function(props) {
 		for (var key in props) {

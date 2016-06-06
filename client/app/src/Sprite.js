@@ -6,22 +6,51 @@ module.exports = (function() {
 			this[key] = props[key];
 		}
 
+		// TODO: image cache
 		this.spriteImage = new Image();
 		this.spriteImage.src = this.url;
 
+		// animation
+		this.frameIndex = 0;
+		this.animFPS = 1;
+		this.currentAnim = null;
 		this.animations = {};
 
 	}
 
+	Sprite.prototype.playAnimation = function(name, speed, once) {
+		this.animFPS = speed;
+		this.frameIndex = 0;
+		this.currentAnim = name;
+	};
+
+	Sprite.prototype.update = function(dt) {
+		if (this.currentAnim !== null) {
+			this.frameIndex = (this.frameIndex + this.animFPS * dt) % this.animations[this.currentAnim].frames.length;
+		}
+	};
+
+	Sprite.prototype.stopAnimation = function() {
+		this.currentAnim = null;
+		this.frameIndex = 0;
+	};
+
+	Sprite.prototype.addAnimation = function(name, frames) {
+		this.animations[name] = { frames: frames };
+	};
+
 	Sprite.prototype.render = function(x, y, context, CameraManager) {
 		var scale = 1;
 
+		// animation
+		var dx = this.width * Math.floor(this.frameIndex);
+		// facing
 		var dy = this.isFacingLeft ? this.height : 0;
 
 		context.save();
 		context.translate(x + CameraManager.getCX(), y + CameraManager.getCY());
 		context.scale(1 / scale, 1 / scale);
-		context.drawImage(this.spriteImage, 0, dy, this.width, this.height, 0, 0, this.width, this.height);
+		context.drawImage(this.spriteImage, dx, dy, this.width, this.height, 0, 0, this.width, this.height);
 		context.restore();
 
 		if (window.DEBUG) {
@@ -33,10 +62,6 @@ module.exports = (function() {
 			context.closePath();
 			context.restore();
 		}
-	};
-
-	Sprite.prototype.addAnimation = function(name, frames) {
-
 	};
 
 	return Sprite;

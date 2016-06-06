@@ -13,6 +13,12 @@ module.exports = (function() {
     }
   }
 
+  function update(dt) {
+    for (var key in players) {
+      players[key].update(dt);
+    }
+  }
+
   function getPlayers() {
     return players;
   }
@@ -26,6 +32,7 @@ module.exports = (function() {
 
   return {
     render: render,
+    update: update,
     setPlayers: setPlayers,
     getPlayers: getPlayers
   };

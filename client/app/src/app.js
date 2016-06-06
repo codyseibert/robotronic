@@ -126,14 +126,22 @@ $(document).ready(function(){
 
   setInterval(update, 10);
 
+  var lastTime;
   function render() {
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // update based on time passed, not render speed
+    var now = Date.now();
+    var dt = (now - (lastTime || now)) / 1000.0;
+
+    PlayerManager.update(dt);
 
     PlayerManager.render(context);
     MapManager.render(context);
     BulletManager.render(context);
     EnergyManager.render(context);
 
+    lastTime = now;
     requestAnimationFrame(render);
   }
 
