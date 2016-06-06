@@ -27,6 +27,9 @@ module.exports = (function() {
       player.vy += GRAVITY;
       player.vx *= FRICTION;
 
+      player.width = (2 + player.energy/4) * 12;
+      player.height = (2 + player.energy/4) * 12;
+
       player.x += player.vx;
       var near = MapManager.getBlocksNear(player, 128);
       if (isPlayerColliding(player, near)) {
