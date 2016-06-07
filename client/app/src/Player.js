@@ -7,8 +7,8 @@ module.exports = (function() {
 		var self = this;
 
 		this.id = id;
-		this.width = 48;
-		this.height = 48;
+		this.width = 12;
+		this.height = 12;
 		this.health = 10;
 		this.energy = 0;
 		this.isFacingLeft = false;
@@ -26,6 +26,7 @@ module.exports = (function() {
 			url: 'assets/images/robot.png',
 			width: this.width,
 			height: this.height,
+			scale: 2,
 			isFacingLeft: false
 		});
 
@@ -43,7 +44,10 @@ module.exports = (function() {
 		for (var key in props) {
 			this[key] = props[key];
 		}
+
+		// level up scale
 		this.sprite.isFacingLeft = props.isFacingLeft;
+		this.sprite.scale =  2 + this.energy/4;
 	};
 
 	Player.prototype.render = function(context, CameraManager) {
@@ -56,7 +60,8 @@ module.exports = (function() {
 		// write name
 		context.save();
 		context.translate(this.x + CameraManager.getCX(), this.y + CameraManager.getCY());
-		context.font = "20px Georgia";
+		var fontSize = 16 + Math.floor(this.energy/4);
+		context.font = fontSize + "px 'Orbitron'";
 		context.fillText(this.name, (this.name.length / 2) * -5, -10);
 		context.restore();
 

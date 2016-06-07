@@ -3,8 +3,8 @@ var Entity = require('./Entity');
 
 module.exports = function() {
   _.extend(this, new Entity());
-  this.width = 48;
-  this.height = 48;
+  this.width = 12;
+  this.height = 12;
   this.health = 10;
   this.energy = 0;
   this.isFacingLeft = false;

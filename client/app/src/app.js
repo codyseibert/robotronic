@@ -13,6 +13,7 @@ window.DEBUG = true;
 $(document).ready(function(){
   var canvas = document.getElementById('canvas');
   var context = canvas.getContext("2d");
+
   $(window).resize(function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

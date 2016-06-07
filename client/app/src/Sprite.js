@@ -40,7 +40,6 @@ module.exports = (function() {
 	};
 
 	Sprite.prototype.render = function(x, y, context, CameraManager) {
-		var scale = 1;
 		var scaleX = this.isFacingLeft ? -1 : 1;
 		// animation
 		var dx = 0;
@@ -49,12 +48,13 @@ module.exports = (function() {
 		}
 
 		// facing
-		var fx = this.isFacingLeft ? this.width : 0;
+		var fx = this.isFacingLeft ? this.width * this.scale : 0;
 		//var dy = this.isFacingLeft ? this.height : 0;
 
 		context.save();
+		context.imageSmoothingEnabled = false;
 		context.translate(x + fx + CameraManager.getCX(), y + CameraManager.getCY());
-		context.scale(scaleX * scale, scale);
+		context.scale(scaleX * this.scale, this.scale);
 		context.drawImage(this.spriteImage, dx, 0, this.width, this.height, 0, 0, this.width, this.height);
 		context.restore();
 
@@ -62,7 +62,7 @@ module.exports = (function() {
 			context.save();
 			context.translate(x + CameraManager.getCX(), y + CameraManager.getCY());
 			context.beginPath();
-			context.rect(0, 0, this.width, this.height);
+			context.rect(0, 0, this.width*this.scale, this.height*this.scale);
 			context.stroke();
 			context.closePath();
 			context.restore();
