@@ -4,7 +4,7 @@ var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
 var EnergyManager = require('./EnergyManager');
 
-var DEFAULT_BULLET_SPEED = 5;
+var DEFAULT_BULLET_SPEED = 30;
 
 module.exports = (function() {
   var bullets = [];
@@ -21,6 +21,8 @@ module.exports = (function() {
     return bullets;
   }
 
+  var DELTA_SCALE = 100.0
+
   function update(delta) {
 
     for (var i = 0, len = bullets.length; i < len; i++) {
@@ -32,8 +34,8 @@ module.exports = (function() {
         bullet.remove = true;
       }
 
-      bullet.x += Math.cos(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED);
-      bullet.y += Math.sin(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED);
+      bullet.x += Math.cos(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED) * delta / DELTA_SCALE;
+      bullet.y += Math.sin(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED) * delta / DELTA_SCALE;
 
       // TODO: check if bullet hits anyone and damage them using the bulletDamage on the player
       var players = PlayerManager.getAll();
@@ -51,7 +53,7 @@ module.exports = (function() {
         }
       }
 
-      var nearByBlocks = MapManager.getBlocksNear(bullet, 256);
+      var nearByBlocks = MapManager.getBlocksNear(bullet, 128);
       for (var j = 0, blen = nearByBlocks.length; j < blen; j++) {
         var block = nearByBlocks[j];
         if (CollisionUtil.isColliding(bullet, block)) {

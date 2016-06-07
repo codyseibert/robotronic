@@ -3,8 +3,8 @@ var BulletManager = require('./BulletManager');
 var Bullet = require('./Bullet');
 
 var JUMP_OFFSET = 20;
-var JUMP_SPEED = -15.0;
-var SPEED = 5;
+var JUMP_SPEED = -35.0;
+var SPEED = 20;
 var FIRE_DELAY = 250;
 
 module.exports = (function() {

@@ -3,8 +3,9 @@ var MapManager = require('./MapManager');
 var EnergyManager = require('./EnergyManager');
 var CollisionUtil = require('./CollisionUtil');
 
-var GRAVITY = 0.5;
-var FRICTION = 0.80;
+var GRAVITY = 0.9;
+var FRICTION = 0.90;
+var DELTA_SCALE = 100.0
 
 module.exports = (function() {
 
@@ -32,14 +33,14 @@ module.exports = (function() {
         continue;
       }
 
-      energy.x += energy.vx;
-      energy.y += energy.vy;
+      energy.x += energy.vx * delta / DELTA_SCALE;
+      energy.y += energy.vy * delta / DELTA_SCALE;
       energy.vy += GRAVITY;
 
       var near = MapManager.getBlocksNear(energy, 256);
       if (isEntityColliding(energy, near)) {
-        energy.x -= energy.vx;
-        energy.y -= energy.vy;
+        energy.x -= energy.vx * delta / DELTA_SCALE;
+        energy.y -= energy.vy * delta / DELTA_SCALE;
         energy.vx = 0;
         energy.vy = 0;
         energy.fixed = true;
@@ -49,13 +50,17 @@ module.exports = (function() {
     for (var i = 0, len = players.length; i < len; i++) {
       var player = players[i];
 
+      if (player.energy <= 0) {
+        continue;
+      }
+
       player.vy += GRAVITY;
       player.vx *= FRICTION;
 
       player.width = (2 + player.energy/4) * 12;
       player.height = (2 + player.energy/4) * 12;
 
-      player.x += player.vx;
+      player.x += player.vx * delta / DELTA_SCALE;
       player.collisionX = 0;
 
       var near = MapManager.getBlocksNear(player, 256);
@@ -65,16 +70,16 @@ module.exports = (function() {
         } else if (player.vx < 0) {
           player.collisionX = -1
         }
-        player.x -= player.vx;
+        player.x -= player.vx * delta / DELTA_SCALE;
       }
 
-      player.y += player.vy;
+      player.y += player.vy * delta / DELTA_SCALE;
       if (isEntityColliding(player, near)) {
         if (player.vy > 0) {
           player.canJump = true;
         }
 
-        player.y -= player.vy;
+        player.y -= player.vy * delta / DELTA_SCALE;
         player.vy = 0;
       }
 

@@ -61,6 +61,9 @@ module.exports = (function() {
 
       for (var j = 0, plen = players.length; j < plen; j++) {
         var player = players[j];
+        if (player.energy <= 0) {
+          continue;
+        }
         if (CollisionUtil.isColliding(energy, player)) {
           energy.remove = true;
           player.energy += 1;
