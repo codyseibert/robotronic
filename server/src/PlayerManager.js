@@ -28,14 +28,17 @@ module.exports = (function() {
   }
 
   function update(delta) {
-    players.map(function(player) {
+    for (var i = 0, len = players.length; i < len; i++) {
+      var player = players[i];
       if (player.energy <= 0 && !player.respawning) {
         player.respawning = true;
-        setTimeout(function(){
-          respawn(player);
-        }, RESPAWN_TIME);
+        setTimeout((function(p) {
+          return function(){
+            respawn(p);
+          }
+        }(player)), RESPAWN_TIME);
       }
-    });
+    };
   }
 
   return {

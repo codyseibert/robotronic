@@ -22,7 +22,8 @@ module.exports = (function() {
 
   function update(delta) {
 
-    computers.map(function(computer) {
+    for (var i = 0, len = computers.length; i < len; i++) {
+      var computer = computers[i];
 
       computer.untilNextState -= delta;
 
@@ -80,7 +81,7 @@ module.exports = (function() {
 
         // path find towards that location
 
-    });
+    };
   }
 
   return {

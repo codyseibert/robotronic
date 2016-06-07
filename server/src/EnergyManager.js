@@ -50,18 +50,24 @@ module.exports = (function() {
   setInterval(spawnEnergy, SPAWN_INTERVAL);
 
   function update(delta) {
+    var players = PlayerManager.getAll();
 
-    energies.map(function(energy) {
-      var players = PlayerManager.getAll();
-      for (var i = players.length - 1; i >= 0; i--) {
-        var player = players[i];
-        if (energy.ready && CollisionUtil.isColliding(energy, player)) {
+    for (var i = 0, len = energies.length; i < len; i++) {
+      var energy = energies[i];
+
+      if (!energy.ready) {
+        continue;
+      }
+
+      for (var j = 0, plen = players.length; j < plen; j++) {
+        var player = players[j];
+        if (CollisionUtil.isColliding(energy, player)) {
           energy.remove = true;
           player.energy += 1;
           player.y -= 4;
         }
       }
-    });
+    };
 
     for (var i = energies.length - 1; i >= 0; i--) {
       var energy = energies[i];

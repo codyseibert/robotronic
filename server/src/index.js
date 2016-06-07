@@ -20,6 +20,7 @@ var EventListener = require('./EventListener');
 var EnergyManager = require('./EnergyManager');
 var AIManager = require('./AIManager');
 var Player = require('./Player');
+var StopWatch = require('./StopWatch');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -31,7 +32,7 @@ io.on('connection', function(socket) {
 });
 
 var TARGET_SLEEP_TIME = 10;
-var MAX_AI = 5;
+var MAX_AI = 20;
 
 for (var i = 0; i < MAX_AI; i++){
   var ai = new Player();
@@ -49,14 +50,35 @@ var update = function() {
   var delta = now - then;
 
   var before = new Date().getTime();
+  StopWatch.start('all');
 
+  StopWatch.start('input');
   InputManager.update(delta);
-  PhysicsManager.update(delta);
-  BulletManager.update(delta);
-  EnergyManager.update(delta);
-  PlayerManager.update(delta);
-  AIManager.update(delta);
+  StopWatch.stop('input');
 
+  StopWatch.start('physics');
+  PhysicsManager.update(delta);
+  StopWatch.stop('physics');
+
+  StopWatch.start('bullets');
+  BulletManager.update(delta);
+  StopWatch.stop('bullets');
+
+  StopWatch.start('energy');
+  EnergyManager.update(delta);
+  StopWatch.stop('energy');
+
+  StopWatch.start('player');
+  PlayerManager.update(delta);
+  StopWatch.stop('player');
+
+  StopWatch.start('ai');
+  AIManager.update(delta);
+  StopWatch.stop('ai');
+
+
+  // TODO: Clean this up
+  StopWatch.start('socket');
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');
   }));
@@ -68,6 +90,10 @@ var update = function() {
   io.emit('energies', EnergyManager.getAll().map(function(energy) {
     return energy;
   }));
+  StopWatch.stop('socket');
+
+
+  StopWatch.stop('all');
 
   var after = new Date().getTime();
   var time = after - before;

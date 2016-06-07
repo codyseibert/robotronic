@@ -11,7 +11,7 @@ module.exports = (function() {
   MapManager.generateMap();
 
   function isEntityColliding(player, objects) {
-    for (var i = 0; i < objects.length; i++) {
+    for (var i = 0, len = objects.length; i < len; i++) {
       obj = objects[i];
       if (CollisionUtil.isColliding(player, obj)) {
         return true;
@@ -25,9 +25,11 @@ module.exports = (function() {
     var map = MapManager.getCurrentMap();
     var energies = EnergyManager.getAll();
 
-    energies.forEach(function(energy) {
+    for (var i = 0, len = energies.length; i < len; i++) {
+      var energy = energies[i];
+
       if (energy.fixed) {
-        return;
+        continue;
       }
 
       energy.x += energy.vx;
@@ -42,9 +44,11 @@ module.exports = (function() {
         energy.vy = 0;
         energy.fixed = true;
       };
-    });
+    }
 
-    players.forEach(function(player) {
+    for (var i = 0, len = players.length; i < len; i++) {
+      var player = players[i];
+
       player.vy += GRAVITY;
       player.vx *= FRICTION;
 
@@ -77,7 +81,7 @@ module.exports = (function() {
       if (player.vy > 0) {
         player.canJump = false;
       }
-    });
+    };
   }
 
   return {
