@@ -22,6 +22,20 @@ module.exports = (function() {
     return energies;
   }
 
+  function emitEnergy(x, y) {
+    var e = new Energy();
+    e.x = x;
+    e.y = y;
+    e.ready = false;
+    e.fixed = false;
+    e.vx = Math.random() * 10 - 5;
+    e.vy = Math.random() * -10 - 5;
+    setTimeout(function() {
+      e.ready = true;
+    }, 2000);
+    add(e);
+  }
+
   function spawnEnergy() {
     if (energies.length > MAX_ENERGY) {
       return;
@@ -41,9 +55,10 @@ module.exports = (function() {
       var players = PlayerManager.getAll();
       for (var i = players.length - 1; i >= 0; i--) {
         var player = players[i];
-        if (CollisionUtil.isColliding(energy, player)) {
+        if (energy.ready && CollisionUtil.isColliding(energy, player)) {
           energy.remove = true;
           player.energy += 1;
+          player.y -= 4;
         }
       }
     });
@@ -60,6 +75,7 @@ module.exports = (function() {
     add: add,
     remove: remove,
     getAll: getAll,
+    emitEnergy: emitEnergy,
     update: update
   }
 }());

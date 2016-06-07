@@ -87,7 +87,7 @@ $(document).ready(function(){
     if (myPlayer) {
       $('#energy .count').text(myPlayer.energy || 0);
 
-      if (myPlayer.health <= 0) {
+      if (myPlayer.energy <= 0) {
         $('#udead').show();
       } else {
         $('#udead').hide();

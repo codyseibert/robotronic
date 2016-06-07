@@ -2,21 +2,20 @@ var PlayerManager = require('./PlayerManager');
 var BulletManager = require('./BulletManager');
 var Bullet = require('./Bullet');
 
-var JUMP_OFFSET = 5;
-var JUMP_HEIGHT = 30;
+var JUMP_OFFSET = 20;
 var JUMP_SPEED = -15.0;
-var SPEED = 6;
-var FIRE_DELAY = 250;
+var SPEED = 5;
+var FIRE_DELAY = 200;
 
 module.exports = (function() {
   function update(delta) {
     var players = PlayerManager.getAll()
 
     players.forEach(function(player) {
-      if (player.health <= 0){
+      if (player.energy <= 0){
         return;
       }
-      
+
       if (player.input.left) {
         player.vx = -SPEED;
         player.isFacingLeft = true;

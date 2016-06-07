@@ -2,8 +2,9 @@ var _ = require('lodash');
 var CollisionUtil = require('./CollisionUtil');
 var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
+var EnergyManager = require('./EnergyManager');
 
-var DEFAULT_BULLET_SPEED = 7;
+var DEFAULT_BULLET_SPEED = 5;
 
 module.exports = (function() {
   var bullets = [];
@@ -38,9 +39,12 @@ module.exports = (function() {
         if (player === bullet.player) {
           continue;
         }
-        if (player.health > 0 && CollisionUtil.isColliding(bullet, player)) {
-          player.health -= bullet.player.bulletDamage;
+        if (player.energy > 0 && CollisionUtil.isColliding(bullet, player)) {
+          player.energy -= bullet.player.bulletDamage;
           bullet.remove = true;
+          var rx = parseInt(Math.random() * 20) - 10;
+          var ry = parseInt(Math.random() * 20) - 10;
+          EnergyManager.emitEnergy(player.x + 24, player.y + 24);
         }
       }
 

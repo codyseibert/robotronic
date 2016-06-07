@@ -19,8 +19,7 @@ module.exports = (function() {
   }
 
   function respawn(player) {
-    player.health = 10;
-    player.energy = 0;
+    player.energy = 3;
     player.respawning = null;
 
     var blankLoc = MapManager.findBlankTile();
@@ -30,7 +29,7 @@ module.exports = (function() {
 
   function update(delta) {
     players.map(function(player) {
-      if (player.health <= 0 && !player.respawning) {
+      if (player.energy <= 0 && !player.respawning) {
         player.respawning = true;
         setTimeout(function(){
           respawn(player);

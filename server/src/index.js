@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
 });
 
 var TARGET_SLEEP_TIME = 10;
-var MAX_AI = 10;
+var MAX_AI = 5;
 
 for (var i = 0; i < MAX_AI; i++){
   var ai = new Player();
