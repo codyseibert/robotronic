@@ -13,7 +13,8 @@ module.exports = function() {
     left: false,
     right: false,
     jump: false,
-    explode: false
+    fire: false,
+    angle: 0
   };
   this.canJump = false;
   this.canFire = true;

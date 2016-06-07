@@ -4,22 +4,14 @@ var MapManager = require('./MapManager');
 var RESPAWN_TIME = 5000;
 
 module.exports = (function() {
-  var playerMap = {}
   var players = []
 
-  function add(socket, player) {
-    playerMap[socket.id] = player;
+  function add(player) {
     players.push(player);
   }
 
-  function remove(socket) {
-    var player = playerMap[socket.id];
-    delete playerMap[socket.id];
+  function remove(player) {
     players.splice(players.indexOf(player), 1);
-  }
-
-  function get(socket) {
-    return playerMap[socket.id]
   }
 
   function getAll() {
@@ -50,7 +42,6 @@ module.exports = (function() {
   return {
     add: add,
     remove: remove,
-    get: get,
     getAll: getAll,
     update: update
   }

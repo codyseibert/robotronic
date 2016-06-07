@@ -18,6 +18,7 @@ var MapManager = require('./MapManager');
 var SocketListener = require('./SocketListener');
 var EventListener = require('./EventListener');
 var EnergyManager = require('./EnergyManager');
+var AIManager = require('./AIManager');
 var Player = require('./Player');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,6 +31,17 @@ io.on('connection', function(socket) {
 });
 
 var TARGET_SLEEP_TIME = 10;
+var MAX_AI = 10;
+
+for (var i = 0; i < MAX_AI; i++){
+  var ai = new Player();
+  ai.name = "AI " + i;
+  var blankLoc = MapManager.findBlankTile();
+  ai.x = blankLoc.x - 30;
+  ai.y = blankLoc.y - 30;
+  PlayerManager.add(ai);
+  AIManager.add(ai);
+}
 
 var then = new Date().getTime()
 var update = function() {
@@ -43,6 +55,7 @@ var update = function() {
   BulletManager.update(delta);
   EnergyManager.update(delta);
   PlayerManager.update(delta);
+  AIManager.update(delta);
 
   io.emit('players', PlayerManager.getAll().map(function(player) {
     return _.omit(player, 'socket');

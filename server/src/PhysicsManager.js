@@ -28,8 +28,15 @@ module.exports = (function() {
       player.vx *= FRICTION;
 
       player.x += player.vx;
-      var near = MapManager.getBlocksNear(player, 128);
+      player.collisionX = 0;
+
+      var near = MapManager.getBlocksNear(player, 256);
       if (isPlayerColliding(player, near)) {
+        if (player.vx > 0) {
+          player.collisionX = 1
+        } else if (player.vx < 0) {
+          player.collisionX = -1
+        }
         player.x -= player.vx;
       }
 
@@ -42,7 +49,7 @@ module.exports = (function() {
         player.y -= player.vy;
         player.vy = 0;
       }
-      
+
       if (player.vy > 0) {
         player.canJump = false;
       }

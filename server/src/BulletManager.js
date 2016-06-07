@@ -44,7 +44,7 @@ module.exports = (function() {
         }
       }
 
-      var nearByBlocks = MapManager.getBlocksNear(bullet, 128);
+      var nearByBlocks = MapManager.getBlocksNear(bullet, 256);
       for (var i = 0; i < nearByBlocks.length; i++) {
         var block = nearByBlocks[i];
         if (CollisionUtil.isColliding(bullet, block)) {

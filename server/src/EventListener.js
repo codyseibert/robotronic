@@ -6,8 +6,6 @@ var _ = require('lodash');
 module.exports = function(socket) {
   var player = null;
 
-  var playerCount = 1;
-
   socket.on('join', function(payload) {
     player = new Player();
     player.name = payload.name;
@@ -17,9 +15,8 @@ module.exports = function(socket) {
     var blankLoc = MapManager.findBlankTile();
     player.x = blankLoc.x - 30;
     player.y = blankLoc.y - 30;
-    player.id = playerCount++;
 
-    PlayerManager.add(socket, player);
+    PlayerManager.add(player);
 
     socket.emit('players', PlayerManager.getAll().map(function(player) {
       return _.omit(player, 'socket');
@@ -29,9 +26,8 @@ module.exports = function(socket) {
   });
 
   socket.on('leave', function() {
-    console.log('player leave', socket.id);
     player = null;
-    PlayerManager.remove(socket);
+    PlayerManager.remove(player);
   });
 
   socket.on('input', function(input) {
