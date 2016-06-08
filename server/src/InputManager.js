@@ -2,7 +2,7 @@ var PlayerManager = require('./PlayerManager');
 var BulletManager = require('./BulletManager');
 var Bullet = require('./Bullet');
 
-var JUMP_OFFSET = 20;
+var JUMP_OFFSET = 0;
 var JUMP_SPEED = -35.0;
 var SPEED = 20;
 var FIRE_DELAY = 250;
@@ -19,16 +19,16 @@ module.exports = (function() {
       }
 
       if (player.input.left) {
-        player.vx = -SPEED;
+        player.vx = -SPEED + player.energy / 5.0;
         player.isFacingLeft = true;
       } else if (player.input.right) {
-        player.vx = SPEED;
+        player.vx = SPEED + player.energy / 5.0;
         player.isFacingLeft = false;
       }
 
       if (player.input.jump && player.canJump) {
-        player.y -= JUMP_OFFSET;
-        player.vy = JUMP_SPEED;
+        player.y -= JUMP_OFFSET;// + player.energy / 2.0;
+        player.vy = JUMP_SPEED - player.energy / 2.0;
         player.canJump = false;
       }
 

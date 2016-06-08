@@ -4,7 +4,7 @@ var MapManager = require('./MapManager');
 var PlayerManager = require('./PlayerManager');
 var EnergyManager = require('./EnergyManager');
 
-var DEFAULT_BULLET_SPEED = 30;
+var DEFAULT_BULLET_SPEED = 50;
 
 module.exports = (function() {
   var bullets = [];

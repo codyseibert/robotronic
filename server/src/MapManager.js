@@ -16,37 +16,18 @@ module.exports = (function() {
     return map;
   }
 
-  var mapMemo = {};
-
-  function getI(x) {
-    return parseInt(x / 64);
-  }
-
-  function getJ(y) {
-    return parseInt(y / 64);
-  }
-
   function getBlocksNear(obj, dist) {
-    var i = getI(obj.x);
-    var j = getJ(obj.y);
-
-    var key = i + " " + j;
-
-    if (mapMemo[key]) {
-      return mapMemo[key];
-    } else {
-      mapMemo[key] = [];
-      for (var i = 0, len = map.length; i < len; i++) {
-        var block = map[i];
-        var dx = obj.x - block.x;
-        var dy = obj.y - block.y;
-        var distance = Math.sqrt(dx*dx + dy*dy);
-        if (distance < dist) {
-          mapMemo[key].push(block);
-        }
-      };
-      return mapMemo[key];
+    var near = []
+    for (var i = 0, len = map.length; i < len; i++) {
+      var block = map[i];
+      var dx = obj.x - block.x;
+      var dy = obj.y - block.y;
+      var distance = Math.sqrt(dx*dx + dy*dy);
+      if (distance < dist) {
+        near.push(block);
+      }
     }
+    return near;
   }
 
   // TODO: make configurable

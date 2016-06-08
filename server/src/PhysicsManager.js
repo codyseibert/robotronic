@@ -3,8 +3,8 @@ var MapManager = require('./MapManager');
 var EnergyManager = require('./EnergyManager');
 var CollisionUtil = require('./CollisionUtil');
 
-var GRAVITY = 0.9;
-var FRICTION = 0.90;
+var GRAVITY = 5;
+var FRICTION = 1.2;
 var DELTA_SCALE = 100.0
 
 module.exports = (function() {
@@ -54,16 +54,18 @@ module.exports = (function() {
         continue;
       }
 
-      player.vy += GRAVITY;
-      player.vx *= FRICTION;
+      player.vy += GRAVITY * delta / DELTA_SCALE;
+      player.vx *= FRICTION * delta / DELTA_SCALE;
 
-      player.width = (2 + player.energy/4) * 12;
-      player.height = (2 + player.energy/4) * 12;
+      player.width = (2 + player.energy/4.0) * 12;
+      player.height = (2 + player.energy/4.0) * 12;
+
+      // check if player is stuck
+      var near = MapManager.getBlocksNear(player, 512);
 
       player.x += player.vx * delta / DELTA_SCALE;
       player.collisionX = 0;
 
-      var near = MapManager.getBlocksNear(player, 256);
       if (isEntityColliding(player, near)) {
         if (player.vx > 0) {
           player.collisionX = 1

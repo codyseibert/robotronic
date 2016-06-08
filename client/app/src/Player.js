@@ -46,7 +46,7 @@ module.exports = (function() {
 
 		// level up scale
 		this.sprite.isFacingLeft = props.isFacingLeft;
-		this.sprite.scale =  2 + this.energy/4;
+		this.sprite.scale =  2 + this.energy/4.0;
 	};
 
 	Player.prototype.render = function(context, CameraManager) {

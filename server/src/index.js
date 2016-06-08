@@ -31,8 +31,8 @@ io.on('connection', function(socket) {
   new EventListener(socket);
 });
 
-var TARGET_SLEEP_TIME = 10;
-var MAX_AI = 10;
+var TARGET_SLEEP_TIME = 50;
+var MAX_AI = 30;
 
 setInterval(function() {
   StopWatch.print();
