@@ -58,8 +58,8 @@ module.exports = (function() {
       player.vy += GRAVITY * delta / DELTA_SCALE;
       player.vx *= FRICTION * delta / DELTA_SCALE;
 
-      player.width = (2 + player.energy/4.0) * 12;
-      player.height = (2 + player.energy/4.0) * 12;
+      player.width = (2 + player.energy/10.0) * 16;
+      player.height = (2 + player.energy/10.0) * 16;
 
       // check if player is stuck
       var near = MapManager.getBlocksNear(player, 512);

@@ -7,8 +7,8 @@ module.exports = (function() {
 		var self = this;
 
 		this.id = id;
-		this.width = 12;
-		this.height = 12;
+		this.width = 16;
+		this.height = 16;
 		this.energy = 3;
 		this.isFacingLeft = false;
 		this.bulletDamage = 1;
@@ -40,13 +40,19 @@ module.exports = (function() {
 	};
 
 	Player.prototype.setProps = function(props) {
+
+		var oldEnergy = this.energy;
 		for (var key in props) {
 			this[key] = props[key];
 		}
 
 		// level up scale
 		this.sprite.isFacingLeft = props.isFacingLeft;
-		this.sprite.scale =  2 + this.energy/4.0;
+		this.sprite.scale =  2 + this.energy/10.0;
+
+		if (oldEnergy < 10 && this.energy >=10) {
+			this.sprite.setImage('assets/images/robot2.png');
+		}
 	};
 
 	Player.prototype.render = function(context, CameraManager) {

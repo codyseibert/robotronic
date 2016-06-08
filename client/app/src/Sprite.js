@@ -6,9 +6,7 @@ module.exports = (function() {
 			this[key] = props[key];
 		}
 
-		// TODO: image cache
-		this.spriteImage = new Image();
-		this.spriteImage.src = this.url;
+		this.setImage(this.url);
 
 		// animation
 		this.frameIndex = 0;
@@ -17,6 +15,12 @@ module.exports = (function() {
 		this.animations = {};
 
 	}
+
+	Sprite.prototype.setImage = function(url) {
+		// TODO: image cache
+		this.spriteImage = new Image();
+		this.spriteImage.src = url;
+	};
 
 	Sprite.prototype.playAnimation = function(name, speed, once) {
 		this.animFPS = speed;
