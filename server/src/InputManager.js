@@ -2,10 +2,12 @@ var PlayerManager = require('./PlayerManager');
 var BulletManager = require('./BulletManager');
 var Bullet = require('./Bullet');
 
-var JUMP_OFFSET = 0;
 var JUMP_SPEED = -35.0;
-var SPEED = 20;
+var WALL_JUMP_SPEED = -50;
+var SPEED = 30;
 var FIRE_DELAY = 250;
+var JUMP_SCALE = 0.25;
+var SPEED_SCALE = 0.25;
 
 module.exports = (function() {
   function update(delta) {
@@ -19,17 +21,27 @@ module.exports = (function() {
       }
 
       if (player.input.left) {
-        player.vx = -SPEED + player.energy / 5.0;
+        player.vx = -(SPEED + player.energy * SPEED_SCALE);
         player.isFacingLeft = true;
       } else if (player.input.right) {
-        player.vx = SPEED + player.energy / 5.0;
+        player.vx = SPEED + player.energy * SPEED_SCALE;
         player.isFacingLeft = false;
       }
 
       if (player.input.jump && player.canJump) {
-        player.y -= JUMP_OFFSET;// + player.energy / 2.0;
-        player.vy = JUMP_SPEED - player.energy / 2.0;
+        player.vy = JUMP_SPEED - player.energy * JUMP_SCALE;
         player.canJump = false;
+        player.canWallJump = false;
+      } else if (player.input.jump && player.canWallJump) {
+        player.vy = JUMP_SPEED - player.energy * JUMP_SCALE;
+
+        if (player.collisionX === -1) {
+          player.vx = -1 * (WALL_JUMP_SPEED + JUMP_SPEED - player.energy * JUMP_SCALE);
+        } else if (player.collisionX === 1) {
+          player.vx = WALL_JUMP_SPEED + JUMP_SPEED - player.energy * JUMP_SCALE;
+        }
+
+        player.canWallJump = false;
       }
 
       if (player.input.fire && player.canFire) {

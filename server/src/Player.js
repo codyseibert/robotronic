@@ -17,4 +17,5 @@ module.exports = function() {
   };
   this.canJump = false;
   this.canFire = true;
+  this.wallStick = false;
 }

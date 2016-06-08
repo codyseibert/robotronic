@@ -6,6 +6,7 @@ var CollisionUtil = require('./CollisionUtil');
 var GRAVITY = 5;
 var FRICTION = 1.2;
 var DELTA_SCALE = 100.0
+var SLIDE_SPEED = 0.1;
 
 module.exports = (function() {
 
@@ -65,6 +66,7 @@ module.exports = (function() {
 
       player.x += player.vx * delta / DELTA_SCALE;
       player.collisionX = 0;
+      player.canWallJump = false;
 
       if (isEntityColliding(player, near)) {
         if (player.vx > 0) {
@@ -75,18 +77,22 @@ module.exports = (function() {
         player.x -= player.vx * delta / DELTA_SCALE;
       }
 
-      player.y += player.vy * delta / DELTA_SCALE;
-      if (isEntityColliding(player, near)) {
-        if (player.vy > 0) {
-          player.canJump = true;
-        }
+      if (!player.wallStick) {
+        player.y += player.vy * delta / DELTA_SCALE;
+      }
 
+      if (isEntityColliding(player, near)) {
+        player.canJump = true;
         player.y -= player.vy * delta / DELTA_SCALE;
         player.vy = 0;
       }
 
       if (player.vy > 0) {
         player.canJump = false;
+      }
+      
+      if (!player.canJump && (player.collisionX === 1 || player.collisionX === -1)) {
+        player.canWallJump = true;
       }
     };
   }
