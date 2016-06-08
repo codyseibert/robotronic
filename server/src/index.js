@@ -34,6 +34,10 @@ io.on('connection', function(socket) {
 var TARGET_SLEEP_TIME = 10;
 var MAX_AI = 10;
 
+setInterval(function() {
+  StopWatch.print();
+}, 5000);
+
 for (var i = 0; i < MAX_AI; i++){
   var ai = new Player();
   ai.name = "AI " + i;
@@ -50,7 +54,7 @@ var update = function() {
   var delta = now - then;
 
   var before = new Date().getTime();
-  StopWatch.start('all');
+  StopWatch.start('total');
 
   StopWatch.start('input');
   InputManager.update(delta);
@@ -93,7 +97,7 @@ var update = function() {
   StopWatch.stop('socket');
 
 
-  StopWatch.stop('all');
+  StopWatch.stop('total');
 
   var after = new Date().getTime();
   var time = after - before;
