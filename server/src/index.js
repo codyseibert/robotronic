@@ -72,13 +72,14 @@ var update = function() {
   EnergyManager.update(delta);
   StopWatch.stop('energy');
 
-  StopWatch.start('player');
-  PlayerManager.update(delta);
-  StopWatch.stop('player');
-
+  // Must be before player update
   StopWatch.start('ai');
   AIManager.update(delta);
   StopWatch.stop('ai');
+
+  StopWatch.start('player');
+  PlayerManager.update(delta);
+  StopWatch.stop('player');
 
 
   // TODO: Clean this up

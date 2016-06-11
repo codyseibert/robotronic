@@ -137,8 +137,8 @@ $(document).ready(function(){
 
     PlayerManager.update(dt);
 
-    PlayerManager.render(context);
     MapManager.render(context);
+    PlayerManager.render(context);
     BulletManager.render(context);
     EnergyManager.render(context);
 

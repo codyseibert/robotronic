@@ -36,8 +36,13 @@ module.exports = (function() {
 
       bullet.x += Math.cos(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED) * delta / DELTA_SCALE;
       bullet.y += Math.sin(bullet.angle) * (bullet.player.bulletSpeed || DEFAULT_BULLET_SPEED) * delta / DELTA_SCALE;
+      var lastY = bullet.y;
+
+      var scale = 0.15625 + (bullet.charge / 100.0 * .3125);
 
       // TODO: check if bullet hits anyone and damage them using the bulletDamage on the player
+      bullet.width = bullet.WIDTH * scale;
+      bullet.height = bullet.HEIGHT * scale;
       var players = PlayerManager.getAll();
       for (var j = players.length - 1; j >= 0; j--) {
         var player = players[j];
@@ -45,14 +50,18 @@ module.exports = (function() {
           continue;
         }
         if (player.energy > 0 && CollisionUtil.isColliding(bullet, player)) {
-          player.energy -= bullet.player.bulletDamage;
+          var damage = bullet.player.bulletDamage + parseInt(bullet.charge / 20.0);
+          player.energy -= damage;
           bullet.remove = true;
-          var rx = parseInt(Math.random() * 20) - 10;
-          var ry = parseInt(Math.random() * 20) - 10;
-          EnergyManager.emitEnergy(player.x + 24, player.y + 24);
+          for (var x = 0; x < damage; x++) {
+            EnergyManager.emitEnergy(player.x + 24, player.y + 24);
+          }
         }
       }
 
+      bullet.width = 1;
+      bullet.height = 1;
+      bullet.y += bullet.charge * 0.25;
       var nearByBlocks = MapManager.getBlocksNear(bullet, 128);
       for (var j = 0, blen = nearByBlocks.length; j < blen; j++) {
         var block = nearByBlocks[j];
@@ -60,6 +69,10 @@ module.exports = (function() {
           bullet.remove = true;
         }
       }
+      bullet.y = lastY;
+      bullet.width = bullet.WIDTH * scale;
+      bullet.height = bullet.HEIGHT * scale;
+
     };
 
     for (var i = bullets.length - 1; i >= 0; i--) {

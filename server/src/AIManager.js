@@ -43,6 +43,9 @@ module.exports = (function() {
       }
 
       computer.input.fire = true;
+      if (Math.random() > 0.95) {
+        computer.input.fire = false;
+      }
 
       if (computer.collisionX > 0) {
         if (Math.random() > 0.2) {
@@ -58,7 +61,6 @@ module.exports = (function() {
       if (Math.random() < 0.1) {
         computer.input.jump = true;
       }
-
       // get all of the open world tiles
 
       // find the closest one to the AI

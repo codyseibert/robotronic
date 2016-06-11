@@ -4,7 +4,13 @@ module.exports = (function() {
   var energies = [];
 
   var energyImg = new Image();
-  energyImg.src = "assets/images/energy.png";
+  energyImg.src = "assets/images/energy2.png";
+
+  var energyFixed = new Image();
+  energyFixed.src = "assets/images/energy3.png";
+
+  var energyReady = new Image();
+  energyReady.src = "assets/images/energy.png";
 
   function setEnergies(b) {
     energies = b;
@@ -24,7 +30,14 @@ module.exports = (function() {
         context.save();
         context.translate(energy.x + CameraManager.getCX(), energy.y + CameraManager.getCY());
         context.scale(scale, scale);
-        context.drawImage(energyImg, 0, 0);
+        var image = energyImg;
+        if (energy.fixed) {
+          image = energyFixed;
+        }
+        if (energy.ready) {
+          image = energyReady;
+        }
+        context.drawImage(image, 0, 0);
         context.restore();
 
         if (window.DEBUG) {

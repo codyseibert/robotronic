@@ -8,6 +8,7 @@ module.exports = function() {
   this.energy = 3;
   this.isFacingLeft = false;
   this.bulletDamage = 1;
+  this.charge = 0;
   this.input = {
     left: false,
     right: false,

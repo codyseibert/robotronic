@@ -28,11 +28,16 @@ module.exports = (function() {
     e.y = y;
     e.ready = false;
     e.fixed = false;
-    e.vx = Math.random() * 10 - 5;
-    e.vy = Math.random() * -10 - 5;
+    e.vx = Math.random() * 20 - 10;
+    e.vy = Math.random() * -20 - 10;
     setTimeout(function() {
       e.ready = true;
     }, 2000);
+
+    setTimeout(function() {
+      e.fixed = true;
+    }, Math.random() * 1000);
+
     add(e);
   }
 

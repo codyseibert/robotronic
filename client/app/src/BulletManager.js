@@ -12,7 +12,7 @@ module.exports = (function() {
 
   function render(context) {
     bullets.map(function(bullet) {
-      var scale = 0.15;
+      var scale = 0.15625 + (bullet.charge / 100.0 * .3125);
       context.save();
       context.translate(bullet.x + CameraManager.getCX(), bullet.y + CameraManager.getCY());
       context.scale(scale, scale);
@@ -23,7 +23,8 @@ module.exports = (function() {
         context.save();
         context.translate(bullet.x + CameraManager.getCX(), bullet.y + CameraManager.getCY());
         context.beginPath();
-        context.rect(0, 0, 15, 15);
+        context.scale(scale, scale);
+        context.rect(0, 0, 128, 128);
         context.stroke();
         context.closePath();
         context.restore();

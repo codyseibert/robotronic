@@ -25,8 +25,8 @@ module.exports = (function() {
 
   function update() {
     if (target) {
-      cx = parseInt(window.innerWidth / 2 - target.x, 10);
-      cy = parseInt(window.innerHeight / 2 - target.y, 10);
+      cx = parseInt(window.innerWidth / 2 - target.x - target.width / 2, 10);
+      cy = parseInt(window.innerHeight / 2 - target.y - target.height / 2, 10);
     }
   }
 
