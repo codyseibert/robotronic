@@ -32,7 +32,7 @@ io.on('connection', function(socket) {
 });
 
 var TARGET_SLEEP_TIME = 50;
-var MAX_AI = 2;
+var MAX_AI = 20;
 
 setInterval(function() {
   StopWatch.print();
