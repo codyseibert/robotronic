@@ -52,9 +52,10 @@ module.exports = (function() {
       if (player.charge > 0 && !player.input.fire && player.canFire) {
 
         var angle = player.input.angle;
+        // var angle = Math.atan2(player.input.ty - (player.y + player.height / 2), player.input.tx - (player.x + player.width / 2));
         BulletManager.add(new Bullet({
           x: player.x + player.width / 2,
-          y: player.y + player.height / 2 - player.charge * 0.25,
+          y: player.y + player.height / 2,
           angle: angle,
           player: player,
           charge: player.charge

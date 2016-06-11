@@ -8,6 +8,9 @@ var CameraManager = require('./CameraManager');
 var BulletManager = require('./BulletManager');
 var EnergyManager = require('./EnergyManager');
 
+var crosshairImg = new Image();
+crosshairImg.src = "assets/images/crosshair.png";
+
 window.DEBUG = true;
 
 $(document).ready(function(){
@@ -36,13 +39,19 @@ $(document).ready(function(){
 
   var input = {};
 
+  var mouseX = 0;
+  var mouseY = 0;
+  var myPlayer = null;
+
   $(document).mousemove(function(evt) {
     var centerX = canvas.width / 2 + 24;
     var centerY = canvas.height / 2 + 24;
-    var mouseX = evt.clientX;
-    var mouseY = evt.clientY;
+    mouseX = evt.clientX;
+    mouseY = evt.clientY;
     var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
     input.angle = angle;
+    input.tx = mouseX + CameraManager.getCX();
+    input.ty = mouseY + CameraManager.getCY();
     socket.emit('input', input);
   });
 
@@ -82,7 +91,7 @@ $(document).ready(function(){
   });
 
   socket.on('players', function(p) {
-    var myPlayer = _.find(p, {id: playerId});
+    myPlayer = _.find(p, {id: playerId});
     CameraManager.setTarget(myPlayer);
     if (myPlayer) {
       $('#energy .count').text(myPlayer.energy || 0);
@@ -141,6 +150,15 @@ $(document).ready(function(){
     PlayerManager.render(context);
     BulletManager.render(context);
     EnergyManager.render(context);
+
+    if (myPlayer) {
+      var scale = 0.35 + (myPlayer.charge / 100.0) * 0.5;
+      context.save();
+      context.translate(mouseX - 128 * scale / 2.0, mouseY - 128 * scale / 2.0);
+      context.scale(scale, scale);
+      context.drawImage(crosshairImg, 0, 0);
+      context.restore();
+    }
 
     lastTime = now;
     requestAnimationFrame(render);
