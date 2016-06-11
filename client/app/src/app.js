@@ -11,7 +11,7 @@ var EnergyManager = require('./EnergyManager');
 var crosshairImg = new Image();
 crosshairImg.src = "assets/images/crosshair.png";
 
-window.DEBUG = true;
+window.DEBUG = false;
 
 $(document).ready(function(){
   var canvas = document.getElementById('canvas');
@@ -151,7 +151,7 @@ $(document).ready(function(){
     BulletManager.render(context);
     EnergyManager.render(context);
 
-    if (myPlayer) {
+    if (myPlayer && myPlayer.energy > 0) {
       var scale = 0.35 + (myPlayer.charge / 100.0) * 0.5;
       context.save();
       context.translate(mouseX - 128 * scale / 2.0, mouseY - 128 * scale / 2.0);

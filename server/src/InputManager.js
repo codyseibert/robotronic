@@ -46,7 +46,7 @@ module.exports = (function() {
       }
 
       if (player.input.fire) {
-        player.charge = Math.min(MAX_CHARGE, player.charge + 2);
+        player.charge = Math.min(MAX_CHARGE + player.energy, player.charge + 2);
       }
 
       if (player.charge > 0 && !player.input.fire && player.canFire) {
