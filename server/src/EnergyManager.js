@@ -72,7 +72,6 @@ module.exports = (function() {
         if (CollisionUtil.isColliding(energy, player)) {
           energy.remove = true;
           player.energy += 1;
-          player.y -= 4;
         }
       }
     };

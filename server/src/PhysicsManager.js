@@ -61,8 +61,50 @@ module.exports = (function() {
       player.width = (2 + player.energy/10.0) * 16;
       player.height = (2 + player.energy/10.0) * 16;
 
-      // check if player is stuck
       var near = MapManager.getBlocksNear(player, 512);
+      if (isEntityColliding(player, near)) {
+        var STUCK_MOVE = 20;
+        // player is stuck somewhere
+        var top = {
+          width: player.width,
+          height: 1,
+          x: player.x,
+          y: player.y
+        }
+        if (isEntityColliding(top, near)) {
+          player.y += STUCK_MOVE;
+        }
+
+        var bottom = {
+          width: player.width,
+          height: 1,
+          x: player.x,
+          y: player.y + player.height
+        }
+        if (isEntityColliding(bottom, near)) {
+          player.y -= STUCK_MOVE;
+        }
+
+        var left = {
+          width: 1,
+          height: player.height,
+          x: player.x,
+          y: player.y
+        }
+        if (isEntityColliding(left, near)) {
+          player.x += STUCK_MOVE;
+        }
+
+        var right = {
+          width: 1,
+          height: player.height,
+          x: player.x + player.width,
+          y: player.y
+        }
+        if (isEntityColliding(right, near)) {
+          player.x -= STUCK_MOVE;
+        }
+      }
 
       player.x += player.vx * delta / DELTA_SCALE;
       player.collisionX = 0;
@@ -90,7 +132,7 @@ module.exports = (function() {
       if (player.vy > 0) {
         player.canJump = false;
       }
-      
+
       if (!player.canJump && (player.collisionX === 1 || player.collisionX === -1)) {
         player.canWallJump = true;
       }
