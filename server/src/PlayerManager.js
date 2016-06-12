@@ -28,8 +28,15 @@ module.exports = (function() {
   }
 
   function update(delta) {
+
     for (var i = 0, len = players.length; i < len; i++) {
       var player = players[i];
+
+      if (player.vy >= 1000) {
+        player.energy = 0;
+        player.vy = 0;
+      }
+
       if (player.energy <= 0 && player.input.jump) {
         player.respawning = true;
         respawn(player);
