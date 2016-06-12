@@ -30,13 +30,9 @@ module.exports = (function() {
   function update(delta) {
     for (var i = 0, len = players.length; i < len; i++) {
       var player = players[i];
-      if (player.energy <= 0 && !player.respawning) {
+      if (player.energy <= 0 && player.input.jump) {
         player.respawning = true;
-        setTimeout((function(p) {
-          return function(){
-            respawn(p);
-          }
-        }(player)), RESPAWN_TIME);
+        respawn(player);
       }
     };
   }
